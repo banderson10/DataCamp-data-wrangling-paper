@@ -1,0 +1,819 @@
+---
+title: "Students Perceptions of Using DataCamp in a Data Wrangling Course"
+author:
+- name: Billie S. Anderson
+  affiliation: '1'
+  corresponding: yes
+  address: 5110 Cherry Street, Suite 327, Kansas City, MO 64110
+  email: billie.anderson@umkc.edu
+
+output:
+  papaja::apa6_word: default
+  papaja::apa6_pdf: default
+
+abstract: |
+  This article presents the results of a semester-long professor’s experience teaching a data wrangling class to MBA (masters of business administration) in which the majority of students had little to no background in coding or computing. The goal of this study was to better understand the student’s percption of how to learn data wrangling concepts using DataCamp for the Classroom. Voluntary data was collected from students throughout the semester to gauge their perceptions of how useful they thought the DataCamp content was helping them learn coding and data wrangling concepts. The majority of students reported the time taken to complete the in-class coding exercises using RStudio was longer than expected after completing a DataCamp class. Overall, the student surveys illustrated that DataCamp is a useful and helpful tool for students who have little to no background in coding. A lesson learned from the analysis of the student surveys is that an intermediate step between the assigning of a DataCamp course to requiring students go directly into RStudio and start coding is needed in some situations. For example, developing interactive tutorials using RStudio could assist students in bridging the gap between DataCamp and independently solving data wrangling tasks. 
+  
+  <!-- https://tinyurl.com/ybremelq -->
+keywords: data wrangling curriculum, DataCamp, RStudio Cloud, student perceptions
+wordcount: X
+bibliography: references.bib
+floatsintext: no
+figurelist: no
+tablelist: no
+footnotelist: no
+linenumbers: yes
+mask: no
+draft: no
+documentclass: apa6
+classoption: man
+csl: american-statistical-association.csl
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library(tidyverse)
+library(scales)
+library(forcats)
+library(readxl)
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+
+```
+
+
+# 1. Introduction 
+
+Teaching data science courses in a business school presents a real challenge because many students lack a statistical or computer science background [@wang2018teach, @wang2016challenges]. One reason for this challenge is that students are required to have a certain minimum level of training in mathematics or statistics, but there is no universal undergraduate requirement for computing or programming skills [@holman2018teaching]. @schwab2021data cited a 2019 survey in which the biggest hurdle to faculty is teaching computing skills in data science classes to students with varying backgrounds. 
+
+Data wrangling is one such class in the data science curriculum that is based heavily on programming. Data wrangling is an essential skill for any data analyst [@hardin2017expectations]. Data wrangling is the process of taking messy data and preparing the data properly for analysis, visualization, or reporting purposes. Analysts spend 80% of their time on data cleaning and preparation tasks [@wickham2016r]. These activities can have a profound impact on the quality and credibility of the final analysis. 
+
+
+The spring 2021 semester was the first time that a data wrangling course was taught in a business school at a public university in Missouri.The data wrangling course is a course that is part of the newly created Graduate Certificate in Business Analytics. The class is taught using an online synchronous format. The students perform many of their learning activities outside of the one hour and 15 minutes weekly online class meeting. One goal of the course was to introduce students to the fundamentals of R programming. The other goal was to provide students with applications of data wrangling scenarios so that they can independently clean and prepare messy data for graphical and reporting purposes. The main concepts of the R tidyverse packages were the methodological concepts taught in the course [@wickham2016r].
+
+In the data wrangling class, R is the primary coding tool that students will learn to use. R is well-known for having a steep learning curve, even for the most seasoned programmer. Learning a programming language requires a considerable amount of time due to the trial and error iterations involved in learning a new language. Business students are not accustomed to this type of learning environment [@kim2019teaching]. 
+Developing high engagement activities is imperative in a class such as data wrangling in which many students do not have a coding background and the majority of their learning is in an online format. Interactivity and engagement activities are used interchangeably and are vital to a student's success in an online course [@martin2018engagement]. The engagement component in a class such as data wrangling will assist the student in not becoming frustrated due to the steep learning curve and not want to continue in the course. 
+
+A resource that was used in spring 2021 semester to assist introducing students to coding in R was DataCamp for the Classroom. DataCamp for the Classroom is the free academic version of DataCamp. DataCamp is an online learning platform that contains interactive programming lessons along with short instructional videos. The DataCamp curriculum offers courses in data science topics such as the basics of R and Python to more advanced data wrangling, machine learning, and data science topics.  DataCamp for the Classroom provides instructors and students at higher education institutions free access to DataCamp's full course library. The instructor can assign chapters from courses or entire courses using DataCamp's curriculum. 
+
+Research has shown that practicing with software like R should come early and often in a coding-based course [@hardin2017expectations; @holman2018teaching]. DataCamp allows for this repetitive practice. DataCamp allows the instructor to immediately immerse students in several data science languages such as R because the content is developed in such a way that it does not require the students have any background in a coding language. The advantages and disadvantages of integrating DataCamp in a classroom have been discussed previously [@baumer2020teaching]. 
+
+
+Throughout the spring 2021 semester, students in the data wrangling class were asked to participate in a series of surveys related to their experience with DataCamp. The purpose of this paper is to disseminate the results of the student surveys in an effort to highlight the advantages and disadvantages of using DataCamp as an engagement tool to assist students with little to no programming experience.  
+
+This paper presents the results of collecting student survey data related to using DataCamp as a pedagogical tool in a data wrangling class that is based heavily in R coding techniques. Even though this study is based upon business students, the lessons learned and the challenges faced from teaching students computational and data wrangling skills can be generalized to many other disciplines. In a large survey of analytical and data science topics taught across business schools, @phelps2017current noted the importance of business schools to break down academic silos and be open to teaching side-by-side with other academic departments that teach analytical and data science topics.  By sharing the experience of using DataCamp in a data wrangling class, this paper aims to provide guidance for faculty in business schools and other disciplines that are teaching such a class with a student cohort similar to the one described earlier. 
+
+Section 2 provides the structure of the data wrangling course and the design of the student surveys, Section 3 presents the results of the student surveys, and Section 4 concludes with lessons learned from using DataCamp in a data wrangling class. 
+
+
+# 2. Methods
+
+## 2.1 The Course
+
+The course is broken into 14 weekly learning modules with some learning modules spanning multiple topics. The R language was provided through RStudio Cloud. RStudio is an interactive interface for the R language that helps make R less intimidating [@ccetinkaya2021fresh]. Specifically, the class used RStudio Cloud. RStudio Cloud allows the instructor and students to access R Studio in the cloud rather than installing R locally on the students computers. @ccetinkaya2018infrastructure recommends using RStudio Cloud in order to thwart the student frustration that develops when R is installed locally on student machines. 
+
+Table ** displays the chapters and DataCamp courses and/or chapters that were used in each learning module. The students were given one week to complete the DataCamp course and/or assigned chapters. 
+
+
+
+```{r, code-chunk0, echo=FALSE, warning=FALSE}
+library(papaja)
+
+Modules <- c("1-3","4-5","6","7","8","9","10-12","13","14")
+Datacamp_used <- c("Y", "N","Y","Y","N","Y","Y","N","Y")
+Topics <- c("Introductory and intermediate R programming concepts, and importing data into R.", "Data visualization with ggplot2.","Define tidy data, perform simple data manipulation tasks with dplyr.", "Aggregate and summarize data with dplyr, transform columns of a data frame.", "Convert data between long and wide formats.", "Data visualization with tidy data sing ggplot2, tidy messy data to create effective graphs for an external audience.", "Working with and manipulating string data, regular expressions.", "Factors in R.", "Dates and times in R")
+
+Courses <- c("Introduction to R, Intermediate R, Introduction to Importing Data in R", " ", "Introduction to the Tidyverse", "Data Manipulation with dplyr", " ", "Introduction to Data Visualization with ggplot2", "first three chapters in String Manipulation with stringr in R", " ", "first three chapters in Working with Data and Times in R.")
+datacamp_mod <- data.frame(Modules, Datacamp_used, Topics, Courses)
+
+names(datacamp_mod) <- c(Modules="Learning Module(s)", 
+Datacamp_used="DataCamp content used (Y/N)", 
+Topics="Topics", 
+Courses="DataCamp Chapters/Courses" )
+
+apa_table(datacamp_mod)
+```
+
+
+For each learning module, whether Datacamp was used or not, the students were assigned static (non-interactive) exercises in RStudio to re-enforce the learning concepts for the module. In addition, these static exercises assessed how well the students had mastered the material from the DataCamp courses. These static exercises were from the required textbook or they were originally created by the professor.
+
+
+The static exercises were also used as problems that the students presented to each other during part of the online class time each week. The students signed up for two in-class presentations during the semester. Part of the online synchronous class time was utilized for two students to present a data wrangling coding problem and solution. The students selected two weeks of their choosing using a presentation calendar sign-up sheet during the first week of class. These presentations allowed the students to share the problems they had in solving the problem and almost every week there was a very rich discussion around how to best tackle solving the assigned data wrangling problems. This technique was an effective method to get students talking and sharing code related to the class material. Many times what would happen is after the student presenter would finish, other students would want to share their code solutions and ask questions. 
+
+The students also had to complete a One Minute Discussion Post at the end of each module. The Discussion Post asked the student three questions shown below.
+
+1. What are the two most meaningful things you learned in this module?
+
+2. What question remains uppermost in your mind?
+
+3. Is there anything you do not understand?
+
+The responses had to be answered in three sentences or less. The Discussion Post was completed at the end of the learning module but before the weekly online synchronous class. So, many times the questions that the students had related to the module material was addressed during the online class meeting. 
+
+
+## 2.2 Student Surveys
+
+During the spring 2021 semester, students were asked to participate in an anonymous and voluntary surveys throughout the semester related to their learning experience with DataCamp.The research was approved by the UMKC Institutional Review Board (IRB), Project #2041328. In an effort to not make the paper laborious for the reader, all survey questions and results that were not related to using DataCamp has been placed in the appendix. 
+
+## 2.3 Pre-course and Post Course surveys
+Before the class started, a pre-survey was conducted to gauge the student's interest in data wrangling concepts, R programming language, and the student's awareness of DataCamp. The pre-course survey was administered to determine student's interest, motivation, and perceptions of wanting to learn about data wrangling concepts using the R coding language. After the class, a post-survey was administered with several of the same questions as on the pre-survey along with more questions related to their attitudes related to DataCamp. During the semester, there were multiple surveys administered that gathered specific information related to the student's perceptions of how the students felt that DataCamp was assisting them in solving specific R programming and data wrangling concepts in the class.  
+
+
+## 2.4 Module Surveys
+ 
+A student survey was presented at the end of Module 2 and covered material from Modules 1-2. At the end of Module 2, students had been exposed to the basics and intermediate concepts of programming in R. Another end-of-module survey was presented at the end of Module 9 and covered course material from Modules 6-9. The Module 9 survey gathered information related to the core of the course that involved the tidyverse concepts. The end-of-module surveys were specifically designed to try to gauge the students experience of how well they thought the DataCamp material was assisting them in applying the R coding and data wrangling concepts to the applied problems in RStudio Cloud.  
+
+# 3. Results 
+
+## 3.1 Pre-course survey 
+
+The pre-course survey questions that do not contain specific questions related to DataCamp are in Appendix A. Figure ** shows the survey responses related to familiarity with DataCamp. The response rate for the pre-course survey 86%, with 19 of the 22 students completing the survey. Overwhelmingly, the students were not familiar with DataCamp. A little over half the class reported that they do not regularly code in another class or at their job. 
+
+```{r, code-chunk9, echo=FALSE}
+pre_survey_Q11_Q13 <- read_excel("data/pre_survey_Q11_Q13.xlsx")
+
+pre_survey_Q11_Q13 <- pre_survey_Q11_Q13 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+pre_survey_Q11_Q13$Answer <- factor(pre_survey_Q11_Q13$Answer,
+    levels=1:2,
+    labels=c('Yes','No'))
+
+pre_survey_Q11_Q13_summary <- pre_survey_Q11_Q13 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+
+
+ggplot(pre_survey_Q11_Q13, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=pre_survey_Q11_Q13_summary,
+    aes(y=freq, label=percent(freq/20,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous(expand=expansion(0), labels=scales::percent_format()) +
+  labs(
+    x='Questions', y='Proportion of Students') +
+  theme_classic() +
+  theme(legend.position='top',  plot.caption = element_text(hjust = 0, face="bold"))
+```
+
+Figure ** : Summary of responses to the pre-course survey. The majority of students had no exposure or experience with DataCamp and do not regularly code in other classes or at their job (Table ** lists the questions).
+
+```{r, code-chunk10, echo=FALSE}
+
+pre_survey_Q11_Q13_labels <- read_excel("data/pre_survey_Q11_Q13_labels.xlsx")
+
+apa_table(pre_survey_Q11_Q13_labels, caption="Questions asked in the pre-class survey related to DataCamp and coding experience")
+```
+
+
+## 3.2 Modules 1-2 survey 
+
+Figure ** displays the students responses related to their overall experience with DataCamp after completing the Module 2 survey. The response rate for the Module 2 survey was 59%, with 13 of the 22 students completing the survey. The majority of students reported that DataCamp was helpful or very helpful in assisting them with understanding the material in the class. No students reported that DataCamp was slightly helpful or not helpful (the other options for this survey question). 
+
+```{r, code-chunk11, echo=FALSE}
+
+
+m2_Q1 <- read_excel("data/m2_Q1.xlsx")
+
+
+m2_Q1 <- m2_Q1 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+m2_Q1$Answer <- factor(m2_Q1$Answer,
+    levels=1:3,
+    labels=c('Very helpful','Helpful','Moderately helpful'))
+
+m2_Q1_summary <- m2_Q1 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+
+ggplot(m2_Q1, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=m2_Q1_summary,
+    aes(y=freq, label=percent(freq/20,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous(labels=scales::percent_format()) +
+  labs(
+    x='Rate your overall experience \n with the DataCamp courses you \n have completed thus far in the semester \n in terms of mastering the class material', y='Proportion of \n Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top', axis.title.y = element_text(angle = 0), axis.text.y=element_blank(),       
+        axis.ticks.y=element_blank() )+
+  coord_flip()
+
+```
+
+Figure ** displays constructive elements of DataCamp the students reported as being helpful in mastering the course material. The students could select as many options as they wished. All students that filled out the survey selected being able to work at your own pace as a constructive functionality component of DataCamp. All students except one selected the coding content being presented in small content pieces as helpful.  
+
+```{r, code-chunk12, echo=FALSE}
+
+m2_q2 <- data.frame(Q2=c("being able to code in a browser", "helpful hints when code is wrong","immediate feedback of whehter code is right or wrong", "exercises presented in small pieces","work at your own pace"), num_students=c(6,9,9,12,13))
+
+positions <- c("being able to code in a browser", "helpful hints when code is wrong","immediate feedback of whehter code is right or wrong", "exercises presented in small pieces","work at your own pace")
+
+m2_q2_bar <-ggplot(data=m2_q2, aes(x=Q2, y=num_students)) +
+  geom_bar(stat="identity", fill="steelblue")+
+
+  geom_text(aes(label=num_students), size=2.5, hjust=-0.5)+
+ 
+  scale_x_discrete(limits = positions)+
+   labs(
+     x='responses', y='counts'
+  ) +
+  theme_classic()+
+  theme(
+        plot.title = element_text(hjust = -4.9, vjust=2.12))+
+  coord_flip()
+  
+
+m2_q2_bar
+
+```
+
+Table ** displays the components that the students reported as not being helpful in the DataCamp courses. This question was in the form of an open-ended question in which students could share longer responses in terms of the components of DataCamp they found not useful in assisting them in learning the material. 
+ 
+```{r, code-chunk13, echo=FALSE}
+
+m2_q3 <- read_excel("data/m2_q3.xlsx")
+
+colnames(m2_q3) <- c("Student", "Response")
+
+apa_table(m2_q3, format.args=list(digits=c(0)), caption="What are some component(s)/functionality in the DataCamp courses that you have found not helpful in terms of mastering the course material?")
+```
+
+Students were asked about their ability to implement a static coding exercise in RStudio Cloud after completing a DataCamp course. Figure **  displays student responses regarding their thoughts related to solving the static exercises in RStudio after completing the DataCamp course for the introductory R coding topics. 54% reported of students reported 'Strongly Agree' or 'Agree' as to how long it took them to complete the static exercises.
+```{r, code-chunk14, echo=FALSE}
+
+m2_Q4 <- read_excel("data/m2_Q4.xlsx")
+
+m2_Q4 <- m2_Q4 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+m2_Q4$Answer <- factor(m2_Q4$Answer,
+    levels=1:4,
+    labels=c('Strongly Agree','Agree','Neutral', 'Disagree'))
+
+m2_Q4_summary <- m2_Q4 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+my_title = "At times when I thought I had  mastered the coding tasks in DataCamp, I was surprised at how long it took me to figure out the coding task in RStudio for the class exercises related to vectors, matrices, data frames, and lists."
+
+
+ggplot(m2_Q4, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=m2_Q4_summary,
+    aes(y=freq, label=percent(freq/13,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous( labels=scales::percent_format()) +
+  labs(title = str_wrap(my_title, 50),
+     y='Proportion of \n Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top', axis.text.y=element_blank(),       
+        axis.ticks.y=element_blank(), axis.title.y=element_blank())+
+  coord_flip()
+
+```
+Students that responded ‘Strongly Agree’ or ‘Agree’ to the question in Figure ** were asked to explain why they think it took so long to complete the coding exercises in RStudio. In summary, the comments stated that the students felt that the DataCamp modules were learning in a vacuum and there was not enough application practice for the coding concept that was being learned. 
+
+```{r, code-chunk15, echo=FALSE}
+m2_q5 <- read_excel("data/m2_Q5.xlsx")
+
+colnames(m2_q5) <- c("Student", "Response")
+
+apa_table(m2_q5, format.args=list(digits=c(0)), caption="If you answered 'Strongly Agree' or 'Agree' to the previous question, provide your reason(s) as to why you think you were surprised at how long it took you to complete the class exercises in RStudio")
+```
+
+Students were asked again about completing the static exercises in RStudio after completing a DataCamp course for the intermediate R programming concepts. Figure **  displays student responses regarding their thoughts related to solving the static exercises in RStudio after completing the DataCamp course for the intermediate R coding topics. 54%  of students still reported 'Strongly Agree' or 'Agree' as to how long it took them to complete the static exercise. The students were once again asked to express why they thought it took longer than expected to solve the static exercises in RStudio. These responses were very similar to those expressed in Table ** so these responses will not be restated. 
+
+```{r, code-chunk16, echo=FALSE}
+
+
+m2_Q6 <- read_excel("data/m2_Q6.xlsx")
+
+m2_Q6 <- m2_Q6 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+m2_Q6$Answer <- factor(m2_Q6$Answer,
+    levels=1:4,
+    labels=c('Strongly Agree','Agree','Neutral', 'Disagree'))
+
+m2_Q6_summary <- m2_Q6 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+my_title = "At times when I thought I had  mastered the coding tasks in DataCamp, I was surprised at how long it took me to figure out the coding task in RStudio for the class exercises related to operators, loops, functions, and the lappy function."
+
+
+ggplot(m2_Q6, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=m2_Q6_summary,
+    aes(y=freq, label=percent(freq/13,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous(labels=scales::percent_format()) +
+  labs(title = str_wrap(my_title, 50),
+     y='Proportion of \n Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top', axis.text.y=element_blank(),       
+        axis.ticks.y=element_blank(), axis.title.y=element_blank())+
+  coord_flip()
+
+```
+
+## 3.3 Modules 6-9 survey 
+
+The response rate for the Modules 6-9 survey was 23%, with 5 of the 22 students completing the survey. The students were once again asked about the length of time it took to complete  a static exercise in RStudio after completing the DataCamp content. Figure ** illustrate that 3 of the 5 students agreed with this statement while the other two were neutral. 
+
+
+```{r, code-chunk17, echo=FALSE}
+
+m9_Q1 <- read_excel("data/m9_Q1.xlsx")
+
+m9_Q1 <- m9_Q1 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+m9_Q1$Answer <- factor(m9_Q1$Answer,
+    levels=1:4,
+    labels=c('Strongly Agree','Agree','Neutral', 'Disagree'))
+
+m9_Q1_summary <- m9_Q1 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+my_title = "At times when I thought I had mastered the coding tasks in DataCamp, I was surprised at how long it took me to figure out the coding task in RStudio for the class exercises related to filtering, grouping, sorting, summarizing, and visualizing a data set."
+
+
+ggplot(m9_Q1, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=m9_Q1_summary,
+    aes(y=freq, label=percent(freq/13,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous(labels=scales::percent_format()) +
+  labs(title = str_wrap(my_title, 50),
+     y='Proportion of \n Students'
+  ) +
+   
+  theme_classic() +
+  theme(legend.position='top', axis.text.y=element_blank(),       
+        axis.ticks.y=element_blank(), axis.title.y=element_blank())+
+  coord_flip()
+ 
+
+
+
+```
+
+Students were once again asked to provide their reasoning as to why they thought it took them longer than expected to complete the RStudio exercises after completing a DataCamp course. Table ** provides their responses. 
+```{r, code-chunk18, echo=FALSE}
+m9_q2 <- read_excel("data/m9_Q2.xlsx")
+
+
+colnames(m9_q2) <- c("Student", "Response")
+
+apa_table(m9_q2, format.args=list(digits=c(0)), caption="If you answered 'Strongly Agree' or 'Agree' to the previous question, provide your reason(s) as to why you think you were surprised at how long it took you to complete the class exercises in RStudio")
+```
+
+
+Figure ** displays a set of questions are related to challenge, engagement, and motivation factors of using DataCamp as well as the preference of solving problems in DataCamp versus RStudio. Students were asked about their ability to transfer what they learned in the DataCamp courses to RStudio (Q3). If a student responded 'Strongly agree' or 'Agree' to Q3, students were asked to provide reasons as to why they thought it was difficult to transfer the concepts from DataCamp to RStudio. Only two students answered this question and they used the same responses as for the length of time to complete exercises in RStudio that is provided in Table ** so these responses will not be restated.
+
+```{r, code-chunk19, echo=FALSE}
+
+m9_Q3_Q9 <- read_excel("data/m9_Q3_Q9.xlsx")
+
+m9_Q3_Q9 <- m9_Q3_Q9 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+m9_Q3_Q9$Answer <- factor(m9_Q3_Q9$Answer,
+    levels=1:5,
+    labels=c('Strongly Agree','Agree', 'Neutral', 'Disagree', 'Strongly Disagree'))
+
+m9_Q3_Q9_summary <- m9_Q3_Q9 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+
+ggplot(m9_Q3_Q9, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=m9_Q3_Q9_summary,
+    aes(y=freq, label=percent(freq/5,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous(expand=expansion(0), labels=scales::percent_format()) +
+  labs(
+     
+    x='Questions', y='Proportion of Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top')
+```
+
+
+```{r, code-chunk20, echo=FALSE}
+m9_Q3_Q9_labels <- read_excel("data/m9_Q3_Q9_labels.xlsx")
+
+apa_table(m9_Q3_Q9_labels, caption="Questions asked after completing Module 9")
+```
+
+The last two questions in the Module 9 survey provided the students to explain what they like most and least regarding using DataCamp. 
+```{r, code-chunk21, echo=FALSE}
+
+m9_q10 <- read_excel("data/m9_Q10.xlsx")
+
+colnames(m9_q10) <- c("Student", "Response")
+
+apa_table(m9_q10, format.args=list(digits=c(0)), caption="What do you like most about using DataCamp?")
+```
+
+
+```{r, code-chunk22, echo=FALSE}
+
+m9_q11 <- read_excel("data/m9_Q11.xlsx")
+
+colnames(m9_q11) <- c("Student", "Response")
+
+apa_table(m9_q11, format.args=list(digits=c(0)), caption="What do you like the least about using DataCamp?")
+```
+
+# 3.4 Post-course survey
+
+The post-course survey questions that do not contain specific questions related to DataCamp are in Appendix B.  Figure ** shows the survey responses related to how the students thought DataCamp helped them in learning data wrangling concepts and the R programming language. The response rate for the post-course survey was 36%, with 8 of the 22 students completing the survey. All student respondents indicated they thought DataCamp was helpful in assisting them in learning data wrangling and R programming concepts. 
+
+
+```{r, code-chunk26, echo=FALSE}
+post_Q9_Q10 <- data.frame( Question=c("data wrangling concepts", "data wrangling concepts", "data wrangling concepts", "R programming language", "R programming language"), Response=c("Very helpful", "Helpful", "Moderately helpful", "Very helpful", "Helpful"), Percentage=c(50,38,13,50,50))
+
+
+
+my_title="To what extent did the DataCamp courses help you understand"
+
+ggplot(post_Q9_Q10, aes(x=fct_inorder(Question), y=Percentage))+
+  geom_col(aes(fill=Response))+
+  facet_wrap(Question ~ .)+
+  geom_text(aes(fill=Response,label = scales::percent(Percentage/100)),
+            position = position_stack(0.50))+
+  scale_fill_brewer(palette='Spectral', direction=-1)+
+  scale_y_continuous(labels = scales::percent_format(scale = 1))+
+   labs(title = str_wrap(my_title, 40), y='Proportion of \n Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top', axis.text.x=element_blank(),       
+        axis.ticks.x=element_blank(), axis.title.x=element_blank())
+
+
+```
+
+The last two questions on the post-survey asked the students how likely they would be to recommend DataCamp to their work organization and if they were interested in taking a DataCamp course independent of the academic class. Figure ** presents the students responses. The majority of students responded affirmatively that they would recommend DataCamp and would take a DataCamp class outside of the academic class.
+
+```{r, code-chunk27, echo=FALSE}
+
+post_Q11_Q12 <- data.frame( Question=c("recommend DataCamp", "recommend DataCamp", "take other DataCamp course", "take other DataCamp course", "take other DataCamp course"), Response=c("Extremely likely", "Very likely", "Extremely likely", "Very likely", "Neutral"), Percentage=c(50,50,50,38,13))
+
+
+my_title="To what extent would you"
+
+ggplot(post_Q11_Q12, aes(x=fct_inorder(Question), y=Percentage))+
+  geom_col(aes(fill=Response))+
+  facet_wrap(Question ~ .)+
+  geom_text(aes(fill=Response,label = scales::percent(Percentage/100)),
+            position = position_stack(0.50))+
+  scale_fill_brewer(palette='Spectral', direction=-1)+
+  scale_y_continuous(labels = scales::percent_format(scale = 1))+
+   labs(title = str_wrap(my_title, 40), y='Proportion of \n Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top', axis.text.x=element_blank(),       
+        axis.ticks.x=element_blank(), axis.title.x=element_blank())
+
+
+```
+
+
+# 4. Discussion
+
+The goal of this study was to obtain a student's perception of how useful incorporating an online learning platform like DataCamp in a data science class. To understand how useful DataCamp was from the student perspective, four surveys were disseminated throughout the semester. Overall, as the student survey responses were collected over the semester, the students always exhibited a positive attitude towards DataCamp being useful, engaging, motivating, and a challenging tool to assist in  learning R and data wrangling concepts. The majority of students that completed the post-course survey also would recommend DataCamp to their professional organization or would take a DataCamp course outside of the data wrangling class.
+
+From the instructor perspective, a lesson learned is that DataCamp can be a useful tool to introduce students to coding languages like R. However, it should not be solely used to assess whether or not the students have successfully mastered the learning objectives of an academic class. From the student comments in Table 4, the students recognized that DataCamp does not provide the same experience as solving data wrangling in RStudio. One student noted that one of the reasons that they thought it took them so long to apply the concepts learned in DataCamp to the static exercises was due to the fact they thought the DataCamp content was not real-world. 
+
+One of the pedagogical shortcomings of DataCamp that was identified in the student surveys was the ability to transfer the coding skills the students learned in DataCamp to a real-world scenario of solving data wrangling challenges in R. Once again, the student comments in Table ** indicate the students felt that the static exercises assigned in RStudio were more real-world. It is also interesting to note that students preferred solving problems in RStudio over DataCamp.  
+
+In summary, based on the open-ended questions students felt that the DataCamp modules were learning in a vacuum and there was not enough application practice for the coding concept that was being learned. DataCamp does perform quite a bit of ‘hand-holding’ for the student. For example, many of the DataCamp exercises are fill-in-the-blank. These fill-in-the-blank exercises do not provide an opportunity for students to become fully immersed in the syntax of the R programming language. Struggling with the syntax was a common complaint throughout the open-ended survey questions throughout the semester. 
+
+In order to complement the use of DataCamp in a course like data wrangling, the use of RStudio interactive tutorials are being created for the next time the data wrangling course is taught. The RStudio Cloud interactive tutorials will provide more balance in the practice of data wrangling activities. Given that the student survey data supports a positive student experience with DataCamp, there is support to develop interactive and engaging tools similar to the DataCamp experience within RStudio. RStudio has technology that can be used to create interactive tutorials. These interactive tutorials allow the instructor to incorporate narratives, coding exercises, multiple choice concept questions, videos, and custom messages. The technology used is via the R package **learnr** [@alexander2021introduction].
+
+The RStudio interactive tutorials are meant to be a complement to the DataCamp content and will allow the student to work through coding exercises in a more interactive manner in RStudio. The intent of these interactive tutorials are not meant to replace the static coding exercises. Rather, the interactive tutorials will be a pedagogical improvement to the data wrangling course that will be more engaging than the static exercises. And, the interactive tutorials will provide even more data wrangling coding practice for the students in the real-world setting of RStudio. Practicing the data wrangling concepts using code is vital to a student’s success in a course such as data wrangling. Students literally cannot practice the coding concepts enough.
+
+The interactive tutorials will also address some of the concerns that were brought up in the student surveys. The tutorials will be developed so that students develop all the code. There will be no fill-in-the-blank coding exercises as in DataCamp; this will re-enforce the syntax language in R. Syntax is one of the most difficult concepts to understand when learning a new programming language. The RStudio interactive tutorials will contain a case-study format so as to provide a more realistic business application context to the interactive exercises. The tutorials will also be broader in scope than the DataCamp exercises so the students will experience more of a ‘big picture’ view of the coding exercises.
+
+# Appendix A
+
+Pre-course survey.
+ 
+```{r, code-chunk1, echo = FALSE}
+library(readxl)
+pre_survey_Q1 <- read_excel("data/pre_survey_Q1.xlsx")
+
+colnames(pre_survey_Q1) <- c("Student", "Response")
+
+apa_table(pre_survey_Q1, format.args=list(digits=c(0)), caption="What motivated you to take this class?")
+```
+
+```{r, code-chunk2, echo=FALSE}
+pre_survey_Q2 <- read_excel("data/pre_survey_Q2.xlsx")
+
+colnames(pre_survey_Q2) <- c("Student", "Response")
+
+apa_table(pre_survey_Q2, format.args=list(digits=c(0)), caption="Tell me what you know about data wrangling.")
+
+```
+
+
+```{r, code-chunk30, echo=FALSE}
+pre_survey_Q7 <- read_excel("data/pre_survey_Q7.xlsx")
+
+
+
+pre_survey_Q7 <- pre_survey_Q7 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+pre_survey_Q7$Answer <- factor(pre_survey_Q7$Answer,
+    levels=1:5,
+    labels=c('Not at all','Maybe a little','A fair amount', 'A good amount', 'A great deal'))
+
+pre_survey_Q7_summary <- pre_survey_Q7 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+
+ggplot(pre_survey_Q7, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=pre_survey_Q7_summary,
+    aes(y=freq, label=percent(freq/20,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous( labels=scales::percent_format()) +
+  labs(
+    title='Do you have any anxiety or discomfort about learning languages like R?', 
+    x='Question', y='Proportion of Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top', axis.text.y=element_blank(),       
+        axis.ticks.y=element_blank(), axis.title.y=element_blank())+
+  coord_flip()
+
+
+
+```
+
+
+```{r, code-chunk6, echo=FALSE}
+
+pre_survey_Q8 <- read_excel("data/pre_survey_Q8.xlsx")
+
+colnames(pre_survey_Q8) <- c("Student", "Response")
+
+apa_table(pre_survey_Q8, format.args=list(digits=c(0)), caption="If you have anxiety or discomfort about learning coding languages like R, would you please explain what worries or bothers you the most.")
+
+```
+
+
+```{r, code-chunk7, echo=FALSE}
+
+pre_survey_Q9 <- read_excel("data/pre_survey_Q9.xlsx")
+
+
+pre_survey_Q9 <- pre_survey_Q9 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+pre_survey_Q9$Answer <- factor(pre_survey_Q9$Answer,
+    levels=1:3,
+    labels=c('None','Occasionally/Sometimes','Frequently'))
+
+pre_survey_Q9_summary <- pre_survey_Q9 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+
+ggplot(pre_survey_Q9, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=pre_survey_Q9_summary,
+    aes(y=freq, label=percent(freq/20,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous( labels=scales::percent_format()) +
+  labs(
+    title='To what degree have you used R before?', 
+    x='Question', y='Proportion of Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top', axis.text.y=element_blank(),       
+        axis.ticks.y=element_blank(), axis.title.y=element_blank())+
+  coord_flip()
+
+```
+ 
+
+```{r, code-chunk8, echo=FALSE}
+pre_survey_Q10 <- read_excel("data/pre_survey_Q10.xlsx")
+
+colnames(pre_survey_Q10) <- c("Student", "Response")
+
+apa_table(pre_survey_Q10, format.args=list(digits=c(0)), caption="Other than R, are there are any programming languages that you know fairly well?")
+```
+
+
+# Appendix B 
+
+Post-course survey.
+
+```{r, code-chunk28, echo=FALSE}
+post_Q3_Q4 <- read_excel("data/post_Q3_Q4.xlsx")
+
+post_Q3_Q4 <- post_Q3_Q4 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+
+post_Q3_Q4$Answer <- factor(post_Q3_Q4$Answer,
+    levels=2:5,
+    labels=c('Maybe a little','A fair amount', 'A good amount', 'A great deal'))
+
+post_Q3_Q4_summary <- post_Q3_Q4 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+
+ggplot(post_Q3_Q4, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=post_Q3_Q4_summary,
+    aes(y=freq, label=percent(freq/8,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous(expand=expansion(0), labels=scales::percent_format()) +
+  labs(
+     
+    x='Questions', y='Proportion of Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top')
+
+```
+
+```{r, code-chunk29, echo=FALSE}
+post_Q3_Q4_labels <- read_excel("data/post_Q3_Q4_labels.xlsx")
+
+apa_table(post_Q3_Q4_labels, caption="Questions asked in the post-course survey")
+```
+
+```{r, code-chunk31, echo=FALSE}
+post_survey_Q7 <- read_excel("data/post_survey_Q7.xlsx")
+
+post_survey_Q7 <- post_survey_Q7 %>% 
+  gather(key='Question_num', value='Answer', -Student)
+
+post_survey_Q7$Answer <- factor(post_survey_Q7$Answer,
+    levels=1:4,
+    labels=c('A great deal','Maybe a little','Not at all', 'No anxiety'))
+
+post_survey_Q7_summary <- post_survey_Q7 %>%
+  group_by(Question_num, Answer) %>%
+  dplyr::summarize(freq = n()) %>% ungroup()
+
+my_title="If you had anxiety or discomfort about learning to code in R before class, do you still have anxiety or discomfort with continuing to learn coding languages like R?"
+
+ggplot(post_survey_Q7, aes(x=Question_num)) +
+  geom_bar(aes(fill=Answer), position="fill") +
+  geom_text(
+    data=post_survey_Q7_summary,
+    aes(y=freq, label=percent(freq/20,1), group=Answer),
+    position=position_fill(vjust=0.5),
+    color='gray25', size=3.5
+  ) +
+  scale_fill_brewer(palette='Spectral', direction=-1) +
+  scale_y_continuous( labels=scales::percent_format()) +
+  labs(title = str_wrap(my_title, 50),
+     y='Proportion of Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top', axis.text.y=element_blank(),       
+        axis.ticks.y=element_blank(), axis.title.y=element_blank())+
+  coord_flip()
+
+```
+
+```{r, code-chunk32, echo=FALSE}
+post_survey_Q8 <- read_excel("data/post_survey_Q8.xlsx")
+
+colnames(post_survey_Q8) <- c("Student", "Response")
+
+apa_table(post_survey_Q8, format.args=list(digits=c(0)), caption="If you still have anxiety or discomfort about learning coding languages like R, explain what worries or bothers you the most")
+
+```
+
+# Appendix C
+
+Pre and post survey questions.
+No statistical tests of differences like a paired t-test was performed for the responses for the pre and post survey questions because the surveys were anonomous and voluntary. Therefore, the students surveys are not matched among the pre and post surveys.
+
+
+```{r, code-chunk23, echo=FALSE}
+library(forcats)
+
+pre_post_Q3 <- data.frame(group=c("pre (n=19)", "pre (n=19)", "pre (n=19)", "post (n=8)", "post (n=8)", "post (n=8)"), Response=c("Poor","Fair","Good","Excellent","Very Good","Good"), Percentage=c(45,35,20,12,38,50))
+
+#View(pre_post_Q3)
+
+my_title='How would you rate your understanding of data wrangling methodology?'
+
+ggplot(pre_post_Q3, aes(x=fct_inorder(group), y=Percentage))+
+  geom_col(aes(fill=Response))+
+  geom_text(aes(fill=Response,label = scales::percent(Percentage/100)),
+            position = position_stack(0.5))+
+  scale_fill_brewer(palette='Spectral', direction=-1)+
+  scale_y_continuous(labels = scales::percent_format(scale = 1))+
+   labs(title = str_wrap(my_title, 40), x='group', y='Proportion of \n Students'
+  ) +
+  theme_classic() +
+  theme(legend.position='top')
+
+
+```
+
+```{r, code-chunk24, echo=FALSE}
+
+pre_post_Q4_Q6 <- data.frame(group=c("pre (n=19)", "pre (n=19)", "pre (n=19)", "pre (n=19)", "post (n=8)", "post (n=8)", "pre (n=19)", "pre (n=19)", "pre (n=19)", "post (n=8)", "post (n=8)" ,"pre (n=19)", "pre (n=19)", "pre (n=19)", "pre (n=19)", "post (n=8)", "post (n=8)", "post (n=8)" ), Question=c("Q4", "Q4", "Q4", "Q4", "Q4", "Q4", "Q5", "Q5", "Q5", "Q5", "Q5", "Q6", "Q6", "Q6", "Q6", "Q6", "Q6", "Q6"), Response=c("Not at all", "Maybe a little", "A fair amount", "A good amount", "A great deal", "A good amount", "A fair amount", "A good amount", "A great deal", "A great deal", "A good amount", "Maybe a little", "A fair amount", "A good amount", "A great deal", "A great deal", "A good amount", "A fair amount"), Percentage=c(11,21,21,47,37,63,16,21,63,88,12,11,15,26,58,50,38,12))
+
+
+
+my_title='Pre and Post Survey Questions'
+
+ggplot(pre_post_Q4_Q6, aes(x=fct_inorder(group), y=Percentage))+
+  geom_col(aes(fill=Response))+
+  facet_wrap(Question ~ .)+
+  geom_text(aes(fill=Response,label = scales::percent(Percentage/100)),
+            position = position_stack(0.50))+
+  scale_fill_brewer(palette='Spectral', direction=-1)+
+  scale_y_continuous(expand=expansion(0))+
+   labs(title = str_wrap(my_title, 40), y='Proportion of \n Students', x='group'
+  ) +
+  theme_classic() +
+  theme(legend.position='top')
+
+```
+
+
+```{r, code-chunk5, echo=FALSE}
+pre_post_survey_Q4_Q6_labels <- read_excel("data/pre_post_survey_Q4_Q6_labels.xlsx")
+
+apa_table(pre_post_survey_Q4_Q6_labels, caption="Questions asked in the pre and post class surveys")
+```
+
+
+# References
+
